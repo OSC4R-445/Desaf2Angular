@@ -59,6 +59,7 @@
     <!-- Card del producto -->
     <mat-card
       class="h-100 product-card"
+      [class.selected]="productoSeleccionado?.nombre === producto.nombre"
       (click)="seleccionarProducto(producto)"
       style="cursor: pointer; transition: transform 0.3s;"
     >
