@@ -1,5 +1,6 @@
 <div class="container my-5">
   <div class="row justify-content-center">
+    <!-- Componente Carousel (MDBoostrap) -->
     <div class="col-md-10">
       <mdb-carousel
         [controls]="true"
@@ -49,53 +50,76 @@
 <div class="container my-5">
   <h2 class="text-center mb-4">Productos Destacados</h2>
 
-  <div class="row">
-    <div
-      class="col-md-4 col-lg-3 mb-4 d-flex align-items-stretch"
-      *ngFor="let producto of productos"
+<div class="row">
+  <!-- REQUISITO 2: ngFor para generar las cards -->
+  <div
+    class="col-md-4 col-lg-3 mb-4 d-flex align-items-stretch flex-column"
+    *ngFor="let producto of productos"
+  >
+    <!-- Card del producto -->
+    <mat-card
+      class="h-100 product-card"
+      (click)="seleccionarProducto(producto)"
+      style="cursor: pointer; transition: transform 0.3s;"
     >
-      <mat-card
-        class="h-100 product-card"
-        (click)="seleccionarProducto(producto)"
-        style="cursor: pointer; transition: transform 0.3s;"
+      <img
+        mat-card-image
+        [src]="producto.imagenUrl"
+        [alt]="producto.nombre"
+        style="height: 200px; object-fit: cover;"
+      />
+      <mat-card-content>
+        <h3>{{ producto.nombre }}</h3>
+        <p class="price">
+          {{ producto.precio | currency : 'USD' : 'symbol' : '1.2-2' }}
+        </p>
+        <mat-chip
+          [color]="
+            producto.tipoEnvio === 'Envío gratis'
+              ? 'primary'
+              : producto.tipoEnvio === 'Envío express'
+              ? 'accent'
+              : 'warn'
+          "
+          highlighted
+        >
+          {{ producto.tipoEnvio }}
+        </mat-chip>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary">Comprar</button>
+        <button mat-button>Detalles</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <!-- Panel de información que se muestra debajo de la card seleccionada -->
+    <div 
+      class="info-panel mt-3 p-3 bg-light rounded" 
+      *ngIf="productoSeleccionado?.nombre === producto.nombre"
+    >
+      <h4>Detalles de {{ producto.nombre }}</h4>
+      <p><strong>Descripción:</strong> {{ producto.descripcion }}</p>
+      <p><strong>Precio:</strong> {{ producto.precio | currency : 'USD' : 'symbol' : '1.2-2' }}</p>
+      <p><strong>Tipo de envío:</strong> {{ producto.tipoEnvio }}</p>
+      <button 
+        mat-raised-button 
+        color="warn" 
+        (click)="productoSeleccionado = null; $event.stopPropagation()"
+        class="mt-2"
       >
-        <img
-          mat-card-image
-          [src]="producto.imagenUrl"
-          [alt]="producto.nombre"
-          style="height: 200px; object-fit: cover;"
-        />
-        <mat-card-content>
-          <h3>{{ producto.nombre }}</h3>
-          <p class="price">
-            {{ producto.precio | currency : 'USD' : 'symbol' : '1.2-2' }}
-          </p>
-          <mat-chip
-            [color]="
-              producto.tipoEnvio === 'Envío gratis'
-                ? 'primary'
-                : producto.tipoEnvio === 'Envío express'
-                ? 'accent'
-                : 'warn'
-            "
-            highlighted
-          >
-            {{ producto.tipoEnvio }}
-          </mat-chip>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-raised-button color="primary">Comprar</button>
-          <button mat-button>Detalles</button>
-        </mat-card-actions>
-      </mat-card>
+        Cerrar
+      </button>
     </div>
   </div>
-
+</div>
+  <!-- FIN DE FILA 1 -->
   <div class="row mt-5">
     <div class="col-12">
+      <!-- REQUISITO 4 y 5: Información del Producto Seleccionado -->
       <ng-container *ngIf="productoSeleccionado">
         <div class="p-4 rounded shadow-lg bg-light info-panel">
           
+          <!-- REQUISITO 4: h1 con ngClass -->
           <h1
             [ngClass]="{
               'text-primary': productoSeleccionado.precio > 100,
@@ -114,6 +138,7 @@
             </strong>
           </h1>
 
+          <!-- REQUISITO 4: span con ngClass -->
           <span
             class="badge p-2 mb-3"
             [ngClass]="{
@@ -126,9 +151,11 @@
             {{ productoSeleccionado.precio | currency : 'USD' : 'symbol' : '1.2-2' }}
           </span>
 
+          <!-- REQUISITO 4: p para la descripción -->
           <p class="text-muted fst-italic">
             <strong>Detalles:</strong> {{ productoSeleccionado.descripcion }}
           </p>
+          
         </div>
       </ng-container>
 
