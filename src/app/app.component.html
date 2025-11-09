@@ -1,208 +1,142 @@
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Carousel MDBootstrap</title>
-    <!-- Font Awesome -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-      rel="stylesheet"
-    />
-    <!-- Google Fonts -->
-    <link
-      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- MDB -->
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.css"
-      rel="stylesheet"
-    />
-    <style>
-      .carousel-item img {
-        height: 500px;
-        object-fit: cover;
-      }
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-md-10">
+      <mdb-carousel
+        [controls]="true"
+        [indicators]="true"
+        [animation]="'fade'"
+      >
+        <mdb-carousel-item>
+          <img
+            src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp"
+            class="d-block w-100"
+            alt="Nature 1"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Primer Slide</h5>
+            <p>Descripción del primer slide del carousel.</p>
+          </div>
+        </mdb-carousel-item>
 
-      .carousel-caption {
-        background: rgba(0, 0, 0, 0.5);
-        border-radius: 10px;
-        padding: 20px;
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container my-5">
-      <div class="row justify-content-center">
-        <div class="col-md-10">
-          <!-- Carousel MDB Angular -->
-          <mdb-carousel
-            [controls]="true"
-            [indicators]="true"
-            [animation]="'fade'"
+        <mdb-carousel-item>
+          <img
+            src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp"
+            class="d-block w-100"
+            alt="Nature 2"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Segundo Slide</h5>
+            <p>Descripción del segundo slide del carousel.</p>
+          </div>
+        </mdb-carousel-item>
+
+        <mdb-carousel-item>
+          <img
+            src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp"
+            class="d-block w-100"
+            alt="Nature 3"
+          />
+          <div class="carousel-caption d-none d-md-block">
+            <h5>Tercer Slide</h5>
+            <p>Descripción del tercer slide del carousel.</p>
+          </div>
+        </mdb-carousel-item>
+      </mdb-carousel>
+    </div>
+  </div>
+</div>
+
+<div class="container my-5">
+  <h2 class="text-center mb-4">Productos Destacados</h2>
+
+  <div class="row">
+    <div
+      class="col-md-4 col-lg-3 mb-4 d-flex align-items-stretch"
+      *ngFor="let producto of productos"
+    >
+      <mat-card
+        class="h-100 product-card"
+        (click)="seleccionarProducto(producto)"
+        style="cursor: pointer; transition: transform 0.3s;"
+      >
+        <img
+          mat-card-image
+          [src]="producto.imagenUrl"
+          [alt]="producto.nombre"
+          style="height: 200px; object-fit: cover;"
+        />
+        <mat-card-content>
+          <h3>{{ producto.nombre }}</h3>
+          <p class="price">
+            {{ producto.precio | currency : 'USD' : 'symbol' : '1.2-2' }}
+          </p>
+          <mat-chip
+            [color]="
+              producto.tipoEnvio === 'Envío gratis'
+                ? 'primary'
+                : producto.tipoEnvio === 'Envío express'
+                ? 'accent'
+                : 'warn'
+            "
+            highlighted
           >
-            <mdb-carousel-item>
-              <img
-                src="https://mdbcdn.b-cdn.net/img/new/slides/041.webp"
-                class="d-block w-100"
-                alt="Nature 1"
-              />
-              <div class="carousel-caption d-none d-md-block">
-                <h5>Primer Slide</h5>
-                <p>Descripción del primer slide del carousel.</p>
-              </div>
-            </mdb-carousel-item>
+            {{ producto.tipoEnvio }}
+          </mat-chip>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-raised-button color="primary">Comprar</button>
+          <button mat-button>Detalles</button>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+  </div>
 
-            <mdb-carousel-item>
-              <img
-                src="https://mdbcdn.b-cdn.net/img/new/slides/042.webp"
-                class="d-block w-100"
-                alt="Nature 2"
-              />
-              <div class="carousel-caption d-none d-md-block">
-                <h5>Segundo Slide</h5>
-                <p>Descripción del segundo slide del carousel.</p>
-              </div>
-            </mdb-carousel-item>
+  <div class="row mt-5">
+    <div class="col-12">
+      <ng-container *ngIf="productoSeleccionado">
+        <div class="p-4 rounded shadow-lg bg-light info-panel">
+          
+          <h1
+            [ngClass]="{
+              'text-primary': productoSeleccionado.precio > 100,
+              'text-success': productoSeleccionado.precio <= 100,
+              'mb-3': true
+            }"
+          >
+            Producto Seleccionado:
+            <strong
+              [ngStyle]="{
+                'font-size': productoSeleccionado.precio > 100 ? '2.5rem' : '1.5rem',
+                'color': productoSeleccionado.precio > 100 ? '#dc3545' : '#198754'
+              }"
+            >
+              {{ productoSeleccionado.nombre }}
+            </strong>
+          </h1>
 
-            <mdb-carousel-item>
-              <img
-                src="https://mdbcdn.b-cdn.net/img/new/slides/043.webp"
-                class="d-block w-100"
-                alt="Nature 3"
-              />
-              <div class="carousel-caption d-none d-md-block">
-                <h5>Tercer Slide</h5>
-                <p>Descripción del tercer slide del carousel.</p>
-              </div>
-            </mdb-carousel-item>
-          </mdb-carousel>
+          <span
+            class="badge p-2 mb-3"
+            [ngClass]="{
+              'bg-danger': productoSeleccionado.precio > 100,
+              'bg-info': productoSeleccionado.precio <= 100
+            }"
+            style="font-size: 1.2rem;"
+          >
+            Precio:
+            {{ productoSeleccionado.precio | currency : 'USD' : 'symbol' : '1.2-2' }}
+          </span>
+
+          <p class="text-muted fst-italic">
+            <strong>Detalles:</strong> {{ productoSeleccionado.descripcion }}
+          </p>
         </div>
+      </ng-container>
+
+      <div *ngIf="!productoSeleccionado" class="text-center p-4">
+        <p class="text-muted">
+          Haz clic en cualquier tarjeta de producto para ver sus detalles aquí.
+        </p>
       </div>
     </div>
-
-    <!-- Sección de Cards con Angular Material -->
-    <div class="container my-5">
-      <h2 class="text-center mb-4">Productos Destacados</h2>
-
-      <div class="row">
-        <!-- Card 1 -->
-        <div class="col-md-4 mb-4">
-          <mat-card class="h-100">
-            <img
-              mat-card-image
-              [src]="producto1.imagen"
-              [alt]="producto1.titulo"
-            />
-            <mat-card-content>
-              <h3>{{ producto1.titulo }}</h3>
-              <p class="price">{{ producto1.precio }}</p>
-              <mat-chip color="primary" highlighted>
-                {{ producto1.tipoEnvio }}
-              </mat-chip>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button color="primary">Comprar</button>
-              <button mat-button>Detalles</button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="col-md-4 mb-4">
-          <mat-card class="h-100">
-            <img
-              mat-card-image
-              [src]="producto2.imagen"
-              [alt]="producto2.titulo"
-            />
-            <mat-card-content>
-              <h3>{{ producto2.titulo }}</h3>
-              <p class="price">{{ producto2.precio }}</p>
-              <mat-chip color="accent" highlighted>
-                {{ producto2.tipoEnvio }}
-              </mat-chip>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button color="primary">Comprar</button>
-              <button mat-button>Detalles</button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="col-md-4 mb-4">
-          <mat-card class="h-100">
-            <img
-              mat-card-image
-              [src]="producto3.imagen"
-              [alt]="producto3.titulo"
-            />
-            <mat-card-content>
-              <h3>{{ producto3.titulo }}</h3>
-              <p class="price">{{ producto3.precio }}</p>
-              <mat-chip color="primary" highlighted>
-                {{ producto3.tipoEnvio }}
-              </mat-chip>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button color="primary">Comprar</button>
-              <button mat-button>Detalles</button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
-
-        <!-- Card 4 -->
-        <div class="col-md-4 mb-4">
-          <mat-card class="h-100">
-            <img
-              mat-card-image
-              [src]="producto4.imagen"
-              [alt]="producto4.titulo"
-            />
-            <mat-card-content>
-              <h3>{{ producto4.titulo }}</h3>
-              <p class="price">{{ producto4.precio }}</p>
-              <mat-chip color="warn" highlighted>
-                {{ producto4.tipoEnvio }}
-              </mat-chip>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button color="primary">Comprar</button>
-              <button mat-button>Detalles</button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
-
-        <!-- Card 5 -->
-        <div class="col-md-4 mb-4">
-          <mat-card class="h-100">
-            <img
-              mat-card-image
-              [src]="producto5.imagen"
-              [alt]="producto5.titulo"
-            />
-            <mat-card-content>
-              <h3>{{ producto5.titulo }}</h3>
-              <p class="price">{{ producto5.precio }}</p>
-              <mat-chip color="primary" highlighted>
-                {{ producto5.tipoEnvio }}
-              </mat-chip>
-            </mat-card-content>
-            <mat-card-actions>
-              <button mat-raised-button color="primary">Comprar</button>
-              <button mat-button>Detalles</button>
-            </mat-card-actions>
-          </mat-card>
-        </div>
-      </div>
-    </div>
-
-    <!-- MDB -->
-    <script
-      type="text/javascript"
-      src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.4.0/mdb.min.js"
-    ></script>
-  </body>
-</html>
+  </div>
+</div>

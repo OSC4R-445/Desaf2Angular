@@ -9,48 +9,91 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'mdb-angular-ui-kit-free';
 
-  // Arreglo de productos
-  productos = [
+  // Variable para almacenar los datos del artículo al hacer clic
+  productoSeleccionado: any | null = null;
+
+  // Arreglo de productos con los atributos: nombre, precio, imagenUrl, tipoEnvio
+  productos: any[] = [
+    // URLs de Pexels con parámetros de tamaño y compresión para un ajuste perfecto
     {
-      titulo: 'Laptop Gaming Pro',
-      precio: '$1,299.99',
+      nombre: 'Laptop Gaming Pro',
+      precio: 1299.99,
+      imagenUrl: 'https://images.pexels.com/photos/2528118/pexels-photo-2528118.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
       tipoEnvio: 'Envío gratis',
-      imagen:
-        'https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400',
+      descripcion: 'Potencia extrema para los juegos más exigentes y tareas de alta demanda.',
     },
     {
-      titulo: 'Smartphone Ultra',
-      precio: '$899.99',
-      tipoEnvio: 'Envío express',
-      imagen:
-        'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400',
-    },
-    {
-      titulo: 'Auriculares Inalámbricos',
-      precio: '$199.99',
-      tipoEnvio: 'Envío gratis',
-      imagen:
-        'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400',
-    },
-    {
-      titulo: 'Cámara DSLR Profesional',
-      precio: '$1,599.99',
+      nombre: 'Cámara DSLR Profesional',
+      precio: 1599.99,
+      imagenUrl: 'https://images.pexels.com/photos/90946/pexels-photo-90946.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
       tipoEnvio: 'Envío seguro',
-      imagen:
-        'https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400',
+      descripcion: 'Captura imágenes con calidad de estudio y video en 4K.',
     },
     {
-      titulo: 'Tablet Drawing Pro',
-      precio: '$749.99',
+      nombre: 'TV 4K OLED 65"',
+      precio: 1899.00,
+      // URL corregida con parámetros de tamaño
+      imagenUrl: 'https://images.pexels.com/photos/1827054/pexels-photo-1827054.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
+      tipoEnvio: 'Envío especializado',
+      descripcion: 'Imágenes vibrantes y negros perfectos para una experiencia cinematográfica.',
+    },
+    {
+      nombre: 'Drone Profesional',
+      precio: 750.50,
+      imagenUrl: 'https://images.pexels.com/photos/1034812/pexels-photo-1034812.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
+      tipoEnvio: 'Envío seguro',
+      descripcion: 'Captura aérea con estabilidad y video de alta definición.',
+    },
+    {
+      nombre: 'Bicicleta de Montaña Pro',
+      precio: 1150.00,
+      imagenUrl: 'https://images.pexels.com/photos/276517/pexels-photo-276517.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
+      tipoEnvio: 'Recogida en tienda',
+      descripcion: 'Diseñada para los senderos más duros y el rendimiento máximo.',
+    },
+    {
+      nombre: 'Mouse Gaming RGB',
+      precio: 45.99,
+      // URL corregida con parámetros de tamaño
+      imagenUrl: 'https://images.pexels.com/photos/1486294/pexels-photo-1486294.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
+      tipoEnvio: 'Envío estándar',
+      descripcion: 'Precisión y velocidad para el jugador competitivo.',
+    },
+    {
+      nombre: 'Funda para Smartphone',
+      precio: 19.99,
+      // URL corregida con parámetros de tamaño
+      imagenUrl: 'https://images.pexels.com/photos/15860832/pexels-photo-15860832.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
+      tipoEnvio: 'Envío express',
+      descripcion: 'Protección elegante y duradera para tu dispositivo.',
+    },
+    {
+      nombre: 'Disco Duro Externo 1TB',
+      precio: 89.90,
+      // URL corregida con parámetros de tamaño
+      imagenUrl: 'https://images.pexels.com/photos/117729/pexels-photo-117729.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
       tipoEnvio: 'Envío gratis',
-      imagen: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400',
+      descripcion: 'Almacenamiento masivo para backups y archivos multimedia.',
+    },
+    {
+      nombre: 'Taza de Café Programador',
+      precio: 12.50,
+      imagenUrl: 'https://images.pexels.com/photos/302899/pexels-photo-302899.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
+      tipoEnvio: 'Envío estándar',
+      descripcion: 'La taza perfecta para tus sesiones de codificación nocturnas.',
+    },
+    {
+      nombre: 'Cable HDMI de Alta Velocidad',
+      precio: 25.00,
+      // URL corregida con parámetros de tamaño
+      imagenUrl: 'https://images.pexels.com/photos/33693716/pexels-photo-33693716.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1',
+      tipoEnvio: 'Envío express',
+      descripcion: 'Soporta resoluciones 4K a 60Hz para una imagen cristalina.',
     },
   ];
 
-  // Propiedades individuales para binding de una vía
-  producto1 = this.productos[0];
-  producto2 = this.productos[1];
-  producto3 = this.productos[2];
-  producto4 = this.productos[3];
-  producto5 = this.productos[4];
+  // Función para cargar los datos del artículo seleccionado
+  seleccionarProducto(producto: any): void {
+    this.productoSeleccionado = producto;
+  }
 }
