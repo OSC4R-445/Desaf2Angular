@@ -46,8 +46,8 @@
 <div class="container my-5">
   <h2 class="text-center mb-4">Productos Destacados</h2>
 
-  <!-- Dividimos los productos en filas de 4 elementos cada una -->
-  <div *ngFor="let fila of obtenerFilasProductos(); let i = index" class="product-row">
+  <!-- Productos divididos en filas de 4 elementos cada una -->
+  <div *ngFor="let fila of filasProductos; let i = index" class="product-row">
     
     <!-- Fila de cards -->
     <div class="row">
@@ -98,7 +98,6 @@
       <div class="col-12">
         <ng-container>
           <div class="info-panel p-4 rounded shadow-lg bg-light">
-            <!-- REQUISITO 4: h1 con ngClass -->
             <h1
               [ngClass]="{
                 'text-primary': productoSeleccionado.precio > 100,
@@ -116,7 +115,6 @@
               </span>
             </h1>
 
-            <!-- REQUISITO 4: span con ngClass -->
             <span
               class="badge p-2 mb-3 d-inline-block"
               [ngClass]="{
@@ -128,7 +126,6 @@
               Precio: {{ productoSeleccionado.precio | currency : 'USD' : 'symbol' : '1.2-2' }}
             </span>
 
-            <!-- REQUISITO 4: p para la descripción -->
             <p
               class="text-muted fst-italic mt-3"
               [ngClass]="{

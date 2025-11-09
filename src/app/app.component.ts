@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -6,13 +6,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss'],
   standalone: false,
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'mdb-angular-ui-kit-free';
 
   // Variable para almacenar los datos del artículo al hacer clic
   productoSeleccionado: any | null = null;
   // Variable para almacenar la fila donde se hizo click
   filaSeleccionada: number | null = null;
+
+  // Cache para las filas de productos
+  filasProductos: any[][] = [];
 
   // Arreglo de productos con los atributos: nombre, precio, imagenUrl, tipoEnvio
   productos: any[] = [
@@ -87,6 +90,11 @@ export class AppComponent {
       descripcion: 'Soporta resoluciones 4K a 60Hz para una imagen cristalina.',
     },
   ];
+
+  ngOnInit() {
+    // Inicializar las filas una sola vez al cargar el componente
+    this.filasProductos = this.obtenerFilasProductos();
+  }
 
   // Función para dividir los productos en filas de 4 elementos
   obtenerFilasProductos(): any[][] {
