@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-
+import { HomeComponent } from './home/home.component';
+import { DescripcionComponent } from './descripcion/descripcion.component';
 // MDB Modules
 import { MdbAccordionModule } from 'mdb-angular-ui-kit/accordion';
 import { MdbCarouselModule } from 'mdb-angular-ui-kit/carousel';
@@ -27,13 +29,22 @@ import { MatChipsModule } from '@angular/material/chips';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'producto/:id', component: DescripcionComponent }, // ← Asegúrate que sea 'producto'
+  { path: '**', redirectTo: '' }
+];
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    DescripcionComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
+    RouterModule.forRoot(routes), 
     // MDB Modules
     MdbAccordionModule,
     MdbCarouselModule,
