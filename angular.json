@@ -43,7 +43,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "5mb"
+                  "maximumError": "10mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -102,8 +102,12 @@
           }
         },
         "deploy": {
-          "builder": "angular-cli-ghpages:deploy"
-        }
+  "builder": "angular-cli-ghpages:deploy",
+  "options": {
+    "baseHref": "/Desaf2Angular/",
+    "deployUrl": "https://osc4r-445.github.io/Desaf2Angular/"
+  }
+}
       }
     }
   },
